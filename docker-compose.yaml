@@ -8,8 +8,6 @@ services:
     environment:
       POSTGRES_PASSWORD: password
 
-
-
   redis:
     image: redis:latest
     restart: always
@@ -18,7 +16,6 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass password
     volumes:
       - redis:/data
-
 
 volumes:
   postgresql_data:

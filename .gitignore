@@ -1,35 +1,33 @@
-# IntelliJ
-.idea/
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
+*.ipr
 
-# Build output
-/target/
-out/
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# Logs
-*.log
-
-# OS crap
-.DS_Store
-Thumbs.db
-
-# Maven wrapper
-.mvn/
-!**/mvn/wrapper/maven-wrapper.jar
-
-# Application properties (optional, güvenlik için)
-# Eğer secrets varsa yorum satırından çıkarabilirsin
-# application-prod.yml
-# application-secrets.yml
-
-# Redis dump (if ever)
-dump.rdb
-
-# Test reports
-/test-output/
-
-# IDE
-*.sw?
-*.swo
-*.bak
-*.tmp
+### VS Code ###
+.vscode/
