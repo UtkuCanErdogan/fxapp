@@ -1,0 +1,35 @@
+# IntelliJ
+.idea/
+*.iml
+
+# Build output
+/target/
+out/
+
+# Logs
+*.log
+
+# OS crap
+.DS_Store
+Thumbs.db
+
+# Maven wrapper
+.mvn/
+!**/mvn/wrapper/maven-wrapper.jar
+
+# Application properties (optional, güvenlik için)
+# Eğer secrets varsa yorum satırından çıkarabilirsin
+# application-prod.yml
+# application-secrets.yml
+
+# Redis dump (if ever)
+dump.rdb
+
+# Test reports
+/test-output/
+
+# IDE
+*.sw?
+*.swo
+*.bak
+*.tmp
