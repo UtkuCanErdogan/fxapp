@@ -17,6 +17,7 @@ spring:
     redis:
       host: localhost
       port: 6379
+      password: password
 
   cache:
     type: redis
@@ -31,6 +32,11 @@ logging:
     root: INFO
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+openExchangeRate:
+  apiUrl: https://openexchangerates.org/api/latest.json
+  apiKey: ef3f5534dfa64fa7b4fa28c40385818a
+  interval: 1800000
 
 server:
   port: 8080
