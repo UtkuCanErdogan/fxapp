@@ -14,8 +14,6 @@ import com.utkucan.fxapp.domain.repository.CurrencyRepository;
 import com.utkucan.fxapp.domain.repository.ExchangeHistoryRepository;
 import com.utkucan.fxapp.common.utils.CsvUtil;
 import jakarta.transaction.Transactional;
-import jakarta.validation.Validator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
