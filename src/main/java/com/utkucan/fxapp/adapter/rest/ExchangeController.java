@@ -40,7 +40,7 @@ public class ExchangeController {
     }
 
     @PostMapping("/convert")
-    public ResponseEntity<ApiResponse<ExchangeResponse>> convert(@Valid  @RequestBody ExchangeRequest request) {
+    public ResponseEntity<ApiResponse<ExchangeResponse>> convert(@RequestBody ExchangeRequest request) {
         ExchangeResponse response = exchangeService.convertCurrencies(request);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
