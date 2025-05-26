@@ -11,5 +11,5 @@ import java.util.UUID;
 
 public interface PostgresExchangeHistoryRepository extends JpaRepository<ExchangeHistory, UUID> {
 
-    Page<ExchangeHistory> findAll(Pageable pageable, Specification<ExchangeHistory> specification);
+    Page<ExchangeHistory> findAll(Specification<ExchangeHistory> specification, Pageable pageable);
 }

@@ -28,10 +28,10 @@ public class ExchangeHistorySpecification {
                 predicates.add(cb.lessThanOrEqualTo(root.get("originalAmount"), filter.getMaxAmount()));
 
             if (filter.getStartDate() != null)
-                predicates.add(cb.greaterThanOrEqualTo(root.get("timestamp"), filter.getStartDate().atStartOfDay()));
+                predicates.add(cb.greaterThanOrEqualTo(root.get("createdAt"), filter.getStartDate().atStartOfDay()));
 
             if (filter.getEndDate() != null)
-                predicates.add(cb.lessThanOrEqualTo(root.get("timestamp"), filter.getEndDate().atTime(LocalTime.MAX)));
+                predicates.add(cb.lessThanOrEqualTo(root.get("createdAt"), filter.getEndDate().atTime(LocalTime.MAX)));
 
             return cb.and(predicates.toArray(new Predicate[0]));
         };

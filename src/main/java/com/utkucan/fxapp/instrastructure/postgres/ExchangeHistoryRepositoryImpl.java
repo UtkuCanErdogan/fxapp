@@ -32,6 +32,6 @@ public class ExchangeHistoryRepositoryImpl implements ExchangeHistoryRepository 
         Pageable pageable = PageRequest.of(filter.getSkip(), filter.getLimit(), sort);
 
         Specification<ExchangeHistory> spec = ExchangeHistorySpecification.filter(filter);
-        return repository.findAll(pageable, spec);
+        return repository.findAll(spec, pageable);
     }
 }
