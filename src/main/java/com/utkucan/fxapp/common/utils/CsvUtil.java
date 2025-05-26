@@ -1,4 +1,4 @@
-package com.utkucan.fxapp.instrastructure.utils;
+package com.utkucan.fxapp.common.utils;
 
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.domain.enums.CurrencyCode;
