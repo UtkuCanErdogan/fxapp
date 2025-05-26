@@ -1,5 +1,6 @@
 package com.utkucan.fxapp.application.service;
 
+import com.utkucan.fxapp.application.dto.request.ExchangeHistoryFilter;
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.application.dto.response.ExchangeResponse;
 import com.utkucan.fxapp.domain.entity.Currency;
@@ -9,6 +10,8 @@ import com.utkucan.fxapp.domain.repository.CurrencyRepository;
 import com.utkucan.fxapp.domain.repository.ExchangeHistoryRepository;
 import com.utkucan.fxapp.instrastructure.utils.CsvUtil;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,6 +32,10 @@ public class ExchangeService {
     public ExchangeService(CurrencyRepository currencyRepository, ExchangeHistoryRepository exchangeHistoryRepository) {
         this.currencyRepository = currencyRepository;
         this.exchangeHistoryRepository = exchangeHistoryRepository;
+    }
+
+    public Page<ExchangeHistory> findAll(ExchangeHistoryFilter filter) {
+        return exchangeHistoryRepository.findAll(filter);
     }
 
     public ExchangeResponse convertCurrencies(ExchangeRequest exchangeRequest) {

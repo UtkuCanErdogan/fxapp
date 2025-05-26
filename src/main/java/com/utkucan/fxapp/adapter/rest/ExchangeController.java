@@ -1,9 +1,13 @@
 package com.utkucan.fxapp.adapter.rest;
 
 import com.utkucan.fxapp.adapter.response.ApiResponse;
+import com.utkucan.fxapp.application.dto.request.ExchangeHistoryFilter;
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.application.dto.response.ExchangeResponse;
 import com.utkucan.fxapp.application.service.ExchangeService;
+import com.utkucan.fxapp.domain.entity.ExchangeHistory;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +23,12 @@ public class ExchangeController {
 
     public ExchangeController(ExchangeService exchangeService) {
         this.exchangeService = exchangeService;
+    }
+
+    @GetMapping()
+    public ResponseEntity<ApiResponse<Page<ExchangeHistory>>> findAll(@ParameterObject ExchangeHistoryFilter filter) {
+        Page<ExchangeHistory> exchangeResponses = exchangeService.findAll(filter);
+        return ResponseEntity.ok(ApiResponse.success(exchangeResponses));
     }
 
     @PostMapping("/convert")
