@@ -8,6 +8,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class BulkCsvResponse {
-    private String fileName;
-    private List<ExchangeCsvResponse> exchangeResults;
+    private final String fileName;
+    private final List<ExchangeCsvResponse> exchangeResults;
 }

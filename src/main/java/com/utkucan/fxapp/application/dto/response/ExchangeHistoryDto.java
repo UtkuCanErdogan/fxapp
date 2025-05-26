@@ -10,15 +10,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class ExchangeHistoryDto {
-    private UUID id;
-    private String fromCurrency;
-    private String targetCurrency;
-    private BigDecimal originalAmount;
-    private BigDecimal convertedAmount;
-    private BigDecimal rateUsed;
+    private final UUID id;
+    private final String fromCurrency;
+    private final String targetCurrency;
+    private final BigDecimal originalAmount;
+    private final BigDecimal convertedAmount;
+    private final BigDecimal rateUsed;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 }
