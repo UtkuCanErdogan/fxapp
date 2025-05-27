@@ -2,6 +2,7 @@ package com.utkucan.fxapp.application.service;
 
 import com.utkucan.fxapp.application.dto.converter.ExchangeHistoryDtoConverter;
 import com.utkucan.fxapp.application.dto.request.ExchangeHistoryFilter;
+import com.utkucan.fxapp.application.dto.request.ExchangeHistorySaveRequest;
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.application.dto.response.BulkCsvResponse;
 import com.utkucan.fxapp.application.dto.response.ExchangeCsvResponse;
@@ -27,24 +28,22 @@ import java.util.*;
 public class ExchangeService {
 
     private final CurrencyRepository currencyRepository;
-    private final ExchangeHistoryRepository exchangeHistoryRepository;
+    private final ExchangeHistoryService exchangeHistoryService;
 
-    public ExchangeService(CurrencyRepository currencyRepository, ExchangeHistoryRepository exchangeHistoryRepository) {
+    public ExchangeService(CurrencyRepository currencyRepository, ExchangeHistoryService exchangeHistoryService) {
         this.currencyRepository = currencyRepository;
-        this.exchangeHistoryRepository = exchangeHistoryRepository;
-    }
-
-    public Page<ExchangeHistoryDto> findAll(ExchangeHistoryFilter filter) {
-        return ExchangeHistoryDtoConverter.fromEntityPage(exchangeHistoryRepository.findAll(filter));
+        this.exchangeHistoryService = exchangeHistoryService;
     }
 
     public ExchangeResponse convertCurrencies(ExchangeRequest exchangeRequest) {
         ExchangeResponse response = convert(exchangeRequest);
+        ExchangeHistorySaveRequest exchangeHistorySaveRequest = new ExchangeHistorySaveRequest(
+                exchangeRequest,
+                response.getConvertedAmount(),
+                response.getRate()
+        );
 
-        ExchangeHistory exchangeHistory = new ExchangeHistory(exchangeRequest.getFrom().getCode(), exchangeRequest.getTo().getCode(),
-                exchangeRequest.getAmount(), response.getConvertedAmount(), response.getRate());
-
-        exchangeHistoryRepository.save(exchangeHistory);
+        exchangeHistoryService.save(exchangeHistorySaveRequest);
         return response;
     }
 
