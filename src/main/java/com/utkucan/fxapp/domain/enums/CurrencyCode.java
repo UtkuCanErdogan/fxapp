@@ -1,5 +1,6 @@
 package com.utkucan.fxapp.domain.enums;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.Optional;
 
 
 @Getter
+@Schema(description = "Supported currency codes")
 public enum CurrencyCode {
     AED("AED"),
     ARS("ARS"),
