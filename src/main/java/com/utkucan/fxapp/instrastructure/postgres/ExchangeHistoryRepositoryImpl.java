@@ -34,4 +34,14 @@ public class ExchangeHistoryRepositoryImpl implements ExchangeHistoryRepository 
         Specification<ExchangeHistory> spec = ExchangeHistorySpecification.filter(filter);
         return repository.findAll(spec, pageable);
     }
+
+    @Override
+    public long count() {
+        return repository.count();
+    }
+
+    @Override
+    public void deleteAll() {
+        repository.deleteAll();
+    }
 }

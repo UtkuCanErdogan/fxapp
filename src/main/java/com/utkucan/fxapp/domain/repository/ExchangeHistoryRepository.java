@@ -9,4 +9,6 @@ import java.util.Set;
 public interface ExchangeHistoryRepository {
     void save(ExchangeHistory history);
     Page<ExchangeHistory> findAll(ExchangeHistoryFilter filter);
+    long count();
+    void deleteAll();
 }
