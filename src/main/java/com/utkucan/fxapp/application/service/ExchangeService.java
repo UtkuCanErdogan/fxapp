@@ -1,21 +1,15 @@
 package com.utkucan.fxapp.application.service;
 
-import com.utkucan.fxapp.application.dto.converter.ExchangeHistoryDtoConverter;
-import com.utkucan.fxapp.application.dto.request.ExchangeHistoryFilter;
 import com.utkucan.fxapp.application.dto.request.ExchangeHistorySaveRequest;
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.application.dto.response.BulkCsvResponse;
 import com.utkucan.fxapp.application.dto.response.ExchangeCsvResponse;
-import com.utkucan.fxapp.application.dto.response.ExchangeHistoryDto;
 import com.utkucan.fxapp.application.dto.response.ExchangeResponse;
 import com.utkucan.fxapp.common.utils.ValidationUtil;
 import com.utkucan.fxapp.domain.entity.Currency;
-import com.utkucan.fxapp.domain.entity.ExchangeHistory;
 import com.utkucan.fxapp.domain.repository.CurrencyRepository;
-import com.utkucan.fxapp.domain.repository.ExchangeHistoryRepository;
 import com.utkucan.fxapp.common.utils.CsvUtil;
 import jakarta.transaction.Transactional;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
