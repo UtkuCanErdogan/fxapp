@@ -18,14 +18,8 @@ public class CsvUtil {
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
         String line;
-        boolean skipHeader = true;
 
         while ((line = reader.readLine()) != null) {
-            if (skipHeader) {
-                skipHeader = false;
-                continue;
-            }
-
             String[] parts = line.split(",");
             if (parts.length != 3) continue;
 
