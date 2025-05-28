@@ -79,8 +79,8 @@ class ExchangeControllerTest {
 
     @Test
     void shouldConvertCsvSuccessfully() throws Exception {
-        ClassPathResource valid1 = new ClassPathResource("test-csv/success_bulk1.csv");
-        ClassPathResource valid2 = new ClassPathResource("test-csv/success_bulk2.csv");
+        ClassPathResource valid1 = new ClassPathResource("test-files/success_bulk1.csv");
+        ClassPathResource valid2 = new ClassPathResource("test-files/success_bulk2.csv");
 
         MockMultipartFile file1 = new MockMultipartFile("file", "success_bulk1.csv", "text/csv", valid1.getInputStream());
         MockMultipartFile file2 = new MockMultipartFile("file", "success_bulk2.csv", "text/csv", valid2.getInputStream());
