@@ -27,8 +27,8 @@ class ExchangeControllerTest {
         String requestJson = """
             {
               "from": "USD",
-              "to": "TRY",
-              "amount": 100.0
+              "target": "TRY",
+              "amount": 10000
             }
         """;
 
@@ -46,8 +46,8 @@ class ExchangeControllerTest {
         String requestJson = """
         {
           "from": "USD",
-          "to": "USD",
-          "amount": 100
+          "target": "USD",
+          "amount": 10000
         }
     """;
 

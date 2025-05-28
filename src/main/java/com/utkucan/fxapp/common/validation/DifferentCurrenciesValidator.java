@@ -8,7 +8,7 @@ public class DifferentCurrenciesValidator implements ConstraintValidator<Differe
 
     @Override
     public boolean isValid(ExchangeRequest value, ConstraintValidatorContext context) {
-        if (value.getFrom() != null && value.getTo() != null && value.getFrom().equals(value.getTo())) {
+        if (value.getFrom() != null && value.getTarget() != null && value.getFrom().equals(value.getTarget())) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate("Source and target currencies must be different")
                     .addPropertyNode("from")

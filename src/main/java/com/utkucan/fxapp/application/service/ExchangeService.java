@@ -50,7 +50,7 @@ public class ExchangeService {
 
         for (ExchangeRequest exchangeRequest : exchangeRequests) {
             ExchangeResponse response = convert(exchangeRequest);
-            ExchangeCsvResponse csvResponse = new ExchangeCsvResponse(response, exchangeRequest.getFrom().getCode(), exchangeRequest.getTo().getCode());
+            ExchangeCsvResponse csvResponse = new ExchangeCsvResponse(response, exchangeRequest.getFrom().getCode(), exchangeRequest.getTarget().getCode(), exchangeRequest.getAmount());
             responses.add(csvResponse);
         }
 
@@ -72,11 +72,11 @@ public class ExchangeService {
 
     public ExchangeResponse convert(ExchangeRequest request) {
         return ValidationUtil.validateAndRun(request, () -> {
-            Set<String> ids = Set.of(request.getFrom().getCode(), request.getTo().getCode());
+            Set<String> ids = Set.of(request.getFrom().getCode(), request.getTarget().getCode());
             Map<String, Currency> currencies = currencyRepository.findByIdIn(ids);
 
             Currency fromCurrency = currencies.get(request.getFrom().getCode());
-            Currency toCurrency = currencies.get(request.getTo().getCode());
+            Currency toCurrency = currencies.get(request.getTarget().getCode());
 
             BigDecimal rate = toCurrency.getRate().divide(fromCurrency.getRate(), 8, RoundingMode.HALF_UP);
             BigDecimal rawResult = BigDecimal.valueOf(request.getAmount()).multiply(rate);

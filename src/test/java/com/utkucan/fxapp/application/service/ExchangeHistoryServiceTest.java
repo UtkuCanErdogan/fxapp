@@ -64,7 +64,7 @@ class ExchangeHistoryServiceTest {
             ExchangeHistorySaveRequest request = requestList.get(i);
 
             assertThat(dto.getFrom()).isEqualTo(request.getFrom().getCode());
-            assertThat(dto.getTarget()).isEqualTo(request.getTo().getCode());
+            assertThat(dto.getTarget()).isEqualTo(request.getTarget().getCode());
             assertThat(dto.getAmount()).isEqualByComparingTo(request.getAmount());
             assertThat(dto.getConvertedAmount()).isEqualByComparingTo(request.getConvertedAmount());
             assertThat(dto.getRate()).isEqualByComparingTo(request.getRate());
@@ -77,8 +77,8 @@ class ExchangeHistoryServiceTest {
         List<ExchangeHistorySaveRequest> requestList = saveTestHistories();
 
         ExchangeHistoryFilter filter = TestExchangeHistoryFactory.getDefaultFilter();
-        filter.setFrom(requestList.get(0).getFrom().getCode());
-        filter.setTarget(requestList.get(0).getTo().getCode());
+        filter.setFrom(requestList.get(0).getFrom());
+        filter.setTarget(requestList.get(0).getTarget());
 
         Page<ExchangeHistoryDto> page = exchangeHistoryService.findAll(filter);
 
@@ -87,7 +87,7 @@ class ExchangeHistoryServiceTest {
         ExchangeHistorySaveRequest request = requestList.get(0);
 
         assertThat(dto.getFrom()).isEqualTo(request.getFrom().getCode());
-        assertThat(dto.getTarget()).isEqualTo(request.getTo().getCode());
+        assertThat(dto.getTarget()).isEqualTo(request.getTarget().getCode());
         assertThat(dto.getAmount()).isEqualByComparingTo(request.getAmount());
         assertThat(dto.getConvertedAmount()).isEqualByComparingTo(request.getConvertedAmount());
         assertThat(dto.getRate()).isEqualByComparingTo(request.getRate());
@@ -97,8 +97,8 @@ class ExchangeHistoryServiceTest {
     @Test
     void shouldReturnResultsWhenFilteredByFromAndToCurrencyDoNotMatchAny() {
         ExchangeHistoryFilter filter = TestExchangeHistoryFactory.getDefaultFilter();
-        filter.setFrom(CurrencyCode.COP.getCode());
-        filter.setTarget(CurrencyCode.THB.getCode());
+        filter.setFrom(CurrencyCode.COP);
+        filter.setTarget(CurrencyCode.THB);
 
         Page<ExchangeHistoryDto> page = exchangeHistoryService.findAll(filter);
 
@@ -123,7 +123,7 @@ class ExchangeHistoryServiceTest {
             ExchangeHistorySaveRequest request = requestList.get(i);
 
             assertThat(dto.getFrom()).isEqualTo(request.getFrom().getCode());
-            assertThat(dto.getTarget()).isEqualTo(request.getTo().getCode());
+            assertThat(dto.getTarget()).isEqualTo(request.getTarget().getCode());
             assertThat(dto.getAmount()).isEqualByComparingTo(request.getAmount());
             assertThat(dto.getConvertedAmount()).isEqualByComparingTo(request.getConvertedAmount());
             assertThat(dto.getRate()).isEqualByComparingTo(request.getRate());

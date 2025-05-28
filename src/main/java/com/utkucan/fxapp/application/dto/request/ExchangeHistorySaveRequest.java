@@ -11,7 +11,7 @@ public class ExchangeHistorySaveRequest extends ExchangeRequest {
     private final BigDecimal rate;
 
     public ExchangeHistorySaveRequest(ExchangeRequest exchangeRequest, Long convertedAmount, BigDecimal rate) {
-        super(exchangeRequest.getFrom(), exchangeRequest.getTo(), exchangeRequest.getAmount());
+        super(exchangeRequest.getFrom(), exchangeRequest.getTarget(), exchangeRequest.getAmount());
         this.convertedAmount = convertedAmount;
         this.rate = rate;
     }

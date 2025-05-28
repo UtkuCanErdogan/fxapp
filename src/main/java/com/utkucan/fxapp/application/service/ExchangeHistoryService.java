@@ -24,7 +24,7 @@ public class ExchangeHistoryService {
     }
 
     public void save(ExchangeHistorySaveRequest exchangeHistorySaveRequest) {
-        ExchangeHistory exchangeHistory = new ExchangeHistory(exchangeHistorySaveRequest.getFrom().getCode(), exchangeHistorySaveRequest.getTo().getCode(),
+        ExchangeHistory exchangeHistory = new ExchangeHistory(exchangeHistorySaveRequest.getFrom().getCode(), exchangeHistorySaveRequest.getTarget().getCode(),
                 exchangeHistorySaveRequest.getAmount(), exchangeHistorySaveRequest.getConvertedAmount(), exchangeHistorySaveRequest.getRate());
 
         exchangeHistoryRepository.save(exchangeHistory);

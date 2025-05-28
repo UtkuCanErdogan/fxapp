@@ -16,10 +16,10 @@ public class ExchangeHistorySpecification {
             List<Predicate> predicates = new ArrayList<>();
 
             if (filter.getFrom() != null)
-                predicates.add(cb.equal(root.get("fromCurrency"), filter.getFrom()));
+                predicates.add(cb.equal(root.get("fromCurrency"), filter.getFrom().getCode()));
 
             if (filter.getTarget() != null)
-                predicates.add(cb.equal(root.get("targetCurrency"), filter.getTarget()));
+                predicates.add(cb.equal(root.get("targetCurrency"), filter.getTarget().getCode()));
 
             if (filter.getMinAmount() != null)
                 predicates.add(cb.greaterThanOrEqualTo(root.get("amount"), filter.getMinAmount()));
