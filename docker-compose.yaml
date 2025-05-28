@@ -1,4 +1,16 @@
 services:
+  fxapp:
+    build: .
+    container_name: fxapp
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.sample
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+
   postgres:
     image: postgres:16-alpine
     ports:

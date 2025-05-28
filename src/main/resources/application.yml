@@ -28,7 +28,7 @@ spring:
     type: redis
 
   profiles:
-    active: dev
+    active: ${SPRING_PROFILES_ACTIVE:dev}
 
 ---
 
@@ -40,7 +40,7 @@ logging:
 
 openExchangeRate:
   apiUrl: https://openexchangerates.org/api/latest.json
-  apiKey: ef3f5534dfa64fa7b4fa28c40385818a
+  apiKey: your_api_key
   interval: 1800000
 
 server:
