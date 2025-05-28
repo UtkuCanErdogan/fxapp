@@ -1,5 +1,6 @@
 package com.utkucan.fxapp.application.service;
 
+import com.utkucan.fxapp.application.dto.request.CsvUploadRequest;
 import com.utkucan.fxapp.application.dto.request.ExchangeHistorySaveRequest;
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.application.dto.response.BulkCsvResponse;
@@ -10,15 +11,17 @@ import com.utkucan.fxapp.domain.entity.Currency;
 import com.utkucan.fxapp.domain.repository.CurrencyRepository;
 import com.utkucan.fxapp.common.utils.CsvUtil;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
 
 @Service
+@Validated
 public class ExchangeService {
 
     private final CurrencyRepository currencyRepository;
@@ -55,10 +58,10 @@ public class ExchangeService {
     }
 
     @Transactional
-    public List<BulkCsvResponse> processBulkCsv(MultipartFile[] files) throws IOException {
+    public List<BulkCsvResponse> processBulkCsv(@Valid CsvUploadRequest request) {
         List<BulkCsvResponse> responses = new LinkedList<>();
 
-        for (MultipartFile file : files) {
+        for (MultipartFile file : request.getFiles()) {
             List<ExchangeRequest> exchangeRequests = CsvUtil.parseCsvFileToExchangeRequest(file);
             BulkCsvResponse bulkResponse = bulkConvert(exchangeRequests, file.getOriginalFilename());
             responses.add(bulkResponse);
@@ -71,9 +74,6 @@ public class ExchangeService {
         return ValidationUtil.validateAndRun(request, () -> {
             Set<String> ids = Set.of(request.getFrom().getCode(), request.getTo().getCode());
             Map<String, Currency> currencies = currencyRepository.findByIdIn(ids);
-            if (currencies.size() < 2) {
-                throw new IllegalArgumentException("Unsupported currency code");
-            }
 
             Currency fromCurrency = currencies.get(request.getFrom().getCode());
             Currency toCurrency = currencies.get(request.getTo().getCode());
