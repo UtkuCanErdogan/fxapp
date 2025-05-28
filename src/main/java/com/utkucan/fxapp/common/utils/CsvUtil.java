@@ -1,6 +1,8 @@
 package com.utkucan.fxapp.common.utils;
 
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
+import com.utkucan.fxapp.common.exception.ExceptionCode;
+import com.utkucan.fxapp.common.exception.FileReadException;
 import com.utkucan.fxapp.domain.enums.CurrencyCode;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,28 +15,28 @@ import java.util.List;
 
 public class CsvUtil {
 
-    public static List<ExchangeRequest> parseCsvFileToExchangeRequest(MultipartFile file) throws IOException {
+    public static List<ExchangeRequest> parseCsvFileToExchangeRequest(MultipartFile file)  {
         List<ExchangeRequest> requests = new ArrayList<>();
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
-        String line;
+       try {
+           BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+           String line;
 
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split(",");
-            if (parts.length != 3) continue;
+           while ((line = reader.readLine()) != null) {
+               String[] parts = line.split(",");
+               if (parts.length != 3) throw new FileReadException(ExceptionCode.FILE_READ_EXCEPTION);;
 
-            try {
-                String from = parts[0].trim();
-                String to = parts[1].trim();
-                long amount = Long.parseLong(parts[2].trim());
+               String from = parts[0].trim();
+               String to = parts[1].trim();
+               long amount = Long.parseLong(parts[2].trim());
 
-                CurrencyCode fromCurrency = CurrencyCode.valueOf(from);
-                CurrencyCode toCurrency = CurrencyCode.valueOf(to);
-                requests.add(new ExchangeRequest(fromCurrency, toCurrency, amount));
-            } catch (Exception e) {
-                // log & skip
-            }
-        }
+               CurrencyCode fromCurrency = CurrencyCode.valueOf(from);
+               CurrencyCode toCurrency = CurrencyCode.valueOf(to);
+               requests.add(new ExchangeRequest(fromCurrency, toCurrency, amount));
+           }
+       } catch (Exception e) {
+           throw new FileReadException(ExceptionCode.FILE_READ_EXCEPTION);
+       }
 
         return requests;
     }
