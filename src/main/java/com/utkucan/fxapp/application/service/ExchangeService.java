@@ -33,7 +33,7 @@ public class ExchangeService {
         ExchangeResponse response = convert(exchangeRequest);
         ExchangeHistorySaveRequest exchangeHistorySaveRequest = new ExchangeHistorySaveRequest(
                 exchangeRequest,
-                response.getConvertedAmount(),
+                response.getAmount(),
                 response.getRate()
         );
 
@@ -79,7 +79,8 @@ public class ExchangeService {
             Currency toCurrency = currencies.get(request.getTo().getCode());
 
             BigDecimal rate = toCurrency.getRate().divide(fromCurrency.getRate(), 8, RoundingMode.HALF_UP);
-            BigDecimal converted = request.getAmount().multiply(rate).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal rawResult = BigDecimal.valueOf(request.getAmount()).multiply(rate);
+            long converted = rawResult.setScale(0, RoundingMode.HALF_UP).longValue();
 
             return new ExchangeResponse(converted, rate);
         });

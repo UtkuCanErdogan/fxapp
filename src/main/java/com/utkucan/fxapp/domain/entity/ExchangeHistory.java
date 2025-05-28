@@ -27,24 +27,24 @@ public class ExchangeHistory {
     @Column(name = "target_currency", nullable = false)
     private String targetCurrency;
 
-    @Column(name = "original_amount", nullable = false, precision = 19, scale = 4)
-    private BigDecimal originalAmount;
+    @Column(name = "amount", nullable = false, precision = 19, scale = 4)
+    private Long amount;
 
     @Column(name = "converted_amount", nullable = false, precision = 19, scale = 4)
-    private BigDecimal convertedAmount;
+    private Long convertedAmount;
 
-    @Column(name = "rate_used", nullable = false, precision = 19, scale = 8)
-    private BigDecimal rateUsed;
+    @Column(name = "rate", nullable = false, precision = 19, scale = 8)
+    private BigDecimal rate;
 
     @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;
 
-    public ExchangeHistory(String fromCurrency, String targetCurrency, BigDecimal originalAmount, BigDecimal convertedAmount, BigDecimal rateUsed) {
+    public ExchangeHistory(String fromCurrency, String targetCurrency, Long originalAmount, Long convertedAmount, BigDecimal rateUsed) {
         this.fromCurrency = fromCurrency;
         this.targetCurrency = targetCurrency;
-        this.originalAmount = originalAmount;
+        this.amount = originalAmount;
         this.convertedAmount = convertedAmount;
-        this.rateUsed = rateUsed;
+        this.rate = rateUsed;
         this.createdAt = LocalDateTime.now();
     }
 }

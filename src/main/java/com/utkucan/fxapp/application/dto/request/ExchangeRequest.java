@@ -21,7 +21,7 @@ public class ExchangeRequest {
     private CurrencyCode to;
 
     @NotNull(message = "Amount is required")
-    @DecimalMin(value = "1", inclusive = true, message = "Amount must be at least 0.01")
-    @DecimalMax(value = "100000000000.00", inclusive = true, message = "Amount must not exceed 1,000,000.00")
-    private BigDecimal amount;
+    @DecimalMin(value = "100", message = "Amount must be at least 100")
+    @DecimalMax(value = "10000000000", message = "Amount must not exceed 10000000000")
+    private Long amount;
 }

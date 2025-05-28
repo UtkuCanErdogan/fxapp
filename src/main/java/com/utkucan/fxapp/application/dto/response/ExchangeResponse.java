@@ -8,6 +8,6 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 public class ExchangeResponse {
-    private final BigDecimal convertedAmount;
+    private final Long amount;
     private final BigDecimal rate;
 }

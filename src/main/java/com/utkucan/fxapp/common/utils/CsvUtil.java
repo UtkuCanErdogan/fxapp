@@ -26,7 +26,7 @@ public class CsvUtil {
             try {
                 String from = parts[0].trim();
                 String to = parts[1].trim();
-                BigDecimal amount = new BigDecimal(parts[2].trim());
+                long amount = Long.parseLong(parts[2].trim());
 
                 CurrencyCode fromCurrency = CurrencyCode.valueOf(from);
                 CurrencyCode toCurrency = CurrencyCode.valueOf(to);

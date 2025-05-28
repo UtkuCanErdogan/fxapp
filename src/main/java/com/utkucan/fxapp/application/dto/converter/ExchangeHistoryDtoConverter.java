@@ -13,9 +13,9 @@ public class ExchangeHistoryDtoConverter {
                 entity.getId(),
                 entity.getFromCurrency(),
                 entity.getTargetCurrency(),
-                entity.getOriginalAmount(),
+                entity.getAmount(),
                 entity.getConvertedAmount(),
-                entity.getRateUsed(),
+                entity.getRate(),
                 entity.getCreatedAt()
         );
     }

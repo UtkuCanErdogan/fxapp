@@ -18,14 +18,14 @@ public class ExchangeHistorySpecification {
             if (filter.getFrom() != null)
                 predicates.add(cb.equal(root.get("fromCurrency"), filter.getFrom()));
 
-            if (filter.getTo() != null)
-                predicates.add(cb.equal(root.get("targetCurrency"), filter.getTo()));
+            if (filter.getTarget() != null)
+                predicates.add(cb.equal(root.get("targetCurrency"), filter.getTarget()));
 
             if (filter.getMinAmount() != null)
-                predicates.add(cb.greaterThanOrEqualTo(root.get("originalAmount"), filter.getMinAmount()));
+                predicates.add(cb.greaterThanOrEqualTo(root.get("amount"), filter.getMinAmount()));
 
             if (filter.getMaxAmount() != null)
-                predicates.add(cb.lessThanOrEqualTo(root.get("originalAmount"), filter.getMaxAmount()));
+                predicates.add(cb.lessThanOrEqualTo(root.get("amount"), filter.getMaxAmount()));
 
             if (filter.getStartDate() != null)
                 predicates.add(cb.greaterThanOrEqualTo(root.get("createdAt"), filter.getStartDate().atStartOfDay()));

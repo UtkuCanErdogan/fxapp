@@ -13,11 +13,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class ExchangeHistoryDto {
     private final UUID id;
-    private final String fromCurrency;
-    private final String targetCurrency;
-    private final BigDecimal originalAmount;
-    private final BigDecimal convertedAmount;
-    private final BigDecimal rateUsed;
+    private final String from;
+    private final String target;
+    private final Long amount;
+    private final Long convertedAmount;
+    private final BigDecimal rate;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private final LocalDateTime createdAt;
 }

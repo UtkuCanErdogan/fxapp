@@ -7,10 +7,10 @@ import java.math.BigDecimal;
 
 @Getter
 public class ExchangeHistorySaveRequest extends ExchangeRequest {
-    private final BigDecimal convertedAmount;
+    private final Long convertedAmount;
     private final BigDecimal rate;
 
-    public ExchangeHistorySaveRequest(ExchangeRequest exchangeRequest, BigDecimal convertedAmount, BigDecimal rate) {
+    public ExchangeHistorySaveRequest(ExchangeRequest exchangeRequest, Long convertedAmount, BigDecimal rate) {
         super(exchangeRequest.getFrom(), exchangeRequest.getTo(), exchangeRequest.getAmount());
         this.convertedAmount = convertedAmount;
         this.rate = rate;

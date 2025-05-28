@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 @Getter
 public class ExchangeCsvResponse extends ExchangeResponse {
     private final String from;
-    private final String to;
+    private final String target;
 
     public ExchangeCsvResponse(ExchangeResponse exchangeResponse, String from, String to) {
-        super(exchangeResponse.getConvertedAmount(), exchangeResponse.getRate());
+        super(exchangeResponse.getAmount(), exchangeResponse.getRate());
         this.from = from;
-        this.to = to;
+        this.target = to;
     }
 }

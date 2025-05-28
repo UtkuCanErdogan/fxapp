@@ -8,9 +8,9 @@ import java.time.LocalDate;
 @Data
 public class ExchangeHistoryFilter {
     private String from;
-    private String to;
-    private BigDecimal minAmount;
-    private BigDecimal maxAmount;
+    private String target;
+    private Long minAmount;
+    private Long maxAmount;
     private LocalDate startDate;
     private LocalDate endDate;
 

@@ -37,7 +37,7 @@ class ExchangeControllerTest {
                         .content(requestJson))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.success").value(true))
-                .andExpect(jsonPath("$.data.convertedAmount").exists())
+                .andExpect(jsonPath("$.data.amount").exists())
                 .andExpect(jsonPath("$.data.rate").exists());
     }
 

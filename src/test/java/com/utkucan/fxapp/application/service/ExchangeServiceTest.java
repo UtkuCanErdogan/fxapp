@@ -63,23 +63,24 @@ class ExchangeServiceTest {
     void shouldConvertFromTryToEurSuccessfully() {
         CurrencyCode from = CurrencyCode.TRY;
         CurrencyCode to = CurrencyCode.EUR;
-        BigDecimal amount = BigDecimal.valueOf(100);
+        Long amount = 10000L;
 
         ExchangeRequest request = new ExchangeRequest(from, to, amount);
         ExchangeResponse response = exchangeService.convertCurrencies(request);
 
         BigDecimal expectedRate = BigDecimal.valueOf(1.10).divide(BigDecimal.valueOf(0.031), 8, RoundingMode.HALF_UP);
-        BigDecimal expectedAmount = amount.multiply(expectedRate).setScale(2, RoundingMode.HALF_UP);
+        BigDecimal rawResult = BigDecimal.valueOf(request.getAmount()).multiply(expectedRate);
+        long expectedAmount = rawResult.setScale(0, RoundingMode.HALF_UP).longValue();
 
         assertThat(response.getRate()).isEqualByComparingTo(expectedRate);
-        assertThat(response.getConvertedAmount()).isEqualByComparingTo(expectedAmount);
+        assertThat(response.getAmount()).isEqualByComparingTo(expectedAmount);
     }
 
     @Test
     void shouldThrowExceptionWhenFromAndToCurrenciesAreSame() {
         CurrencyCode from = CurrencyCode.EUR;
         CurrencyCode to = CurrencyCode.EUR;
-        BigDecimal amount = BigDecimal.valueOf(100);
+        Long amount = 10000L;
 
         ExchangeRequest request = new ExchangeRequest(from, to, amount);
         assertThatThrownBy(() -> exchangeService.convert(request))
@@ -108,8 +109,8 @@ class ExchangeServiceTest {
     void shouldFailValidation_WhenAmountIsOutOfRange() {
         CurrencyCode from = CurrencyCode.EUR;
         CurrencyCode to = CurrencyCode.USD;
-        BigDecimal minAmount = BigDecimal.valueOf(0.5);
-        BigDecimal maxAmount = new BigDecimal("1000000000000.00");
+        Long minAmount = 50L;
+        Long maxAmount = 100000000000L;
 
         ExchangeRequest minRequest = new ExchangeRequest(from , to, minAmount);
         ExchangeRequest maxRequest = new ExchangeRequest(from , to, maxAmount);
@@ -121,7 +122,7 @@ class ExchangeServiceTest {
 
         assertThat(minEx.getConstraintViolations()).hasSize(1);
         assertThat(minEx.getConstraintViolations().iterator().next().getMessage())
-                .isEqualTo("Amount must be at least 0.01");
+                .isEqualTo("Amount must be at least 100");
 
         ConstraintViolationException maxEx = catchThrowableOfType(() ->
                         exchangeService.convert(maxRequest),
@@ -130,7 +131,7 @@ class ExchangeServiceTest {
 
         assertThat(maxEx.getConstraintViolations()).hasSize(1);
         assertThat(maxEx.getConstraintViolations().iterator().next().getMessage())
-                .isEqualTo("Amount must not exceed 1,000,000.00");
+                .isEqualTo("Amount must not exceed 10000000000");
     }
 
     @Test
@@ -172,14 +173,15 @@ class ExchangeServiceTest {
 
                 String from = csv[0];
                 String to = csv[1];
-                BigDecimal amount = new BigDecimal(csv[2]);
+                long amount = Long.parseLong(csv[2].trim());
 
                 assertThat(res.getFrom()).isEqualTo(from);
-                assertThat(res.getTo()).isEqualTo(to);
+                assertThat(res.getTarget()).isEqualTo(to);
                 assertThat(res.getRate()).isGreaterThan(BigDecimal.ZERO);
 
-                BigDecimal expectedConverted = amount.multiply(res.getRate()).setScale(2, RoundingMode.HALF_UP);
-                assertThat(res.getConvertedAmount()).isEqualByComparingTo(expectedConverted);
+                BigDecimal rawResult = BigDecimal.valueOf(amount).multiply(res.getRate());
+                long expectedAmount = rawResult.setScale(0, RoundingMode.HALF_UP).longValue();
+                assertThat(res.getAmount()).isEqualByComparingTo(expectedAmount);
             }
         }
     }
