@@ -1,8 +1,5 @@
 spring:
   datasource:
-    url: jdbc:tc:postgresql:16:///testdb
-    username: test
-    password: test
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
   jpa:
     hibernate:
@@ -12,10 +9,10 @@ spring:
       hibernate:
         format_sql: true
 
-  data:
-    redis:
-      host: localhost
-      port: 6379
+  openExchangeRate:
+    apiUrl: https://openexchangerates.org/api/latest.json
+    apiKey: ef3f5534dfa64fa7b4fa28c40385818a
+    interval: 1800000
 
 logging:
   level:

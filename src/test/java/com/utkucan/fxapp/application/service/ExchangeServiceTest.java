@@ -5,6 +5,7 @@ import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.application.dto.response.BulkCsvResponse;
 import com.utkucan.fxapp.application.dto.response.ExchangeCsvResponse;
 import com.utkucan.fxapp.application.dto.response.ExchangeResponse;
+import com.utkucan.fxapp.common.ContainerTestBase;
 import com.utkucan.fxapp.common.exception.ExceptionCode;
 import com.utkucan.fxapp.common.exception.FileReadException;
 import com.utkucan.fxapp.common.exception.InvalidCurrencyException;
@@ -39,7 +40,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.catchThrowableOfType;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ExchangeServiceTest {
+class ExchangeServiceTest extends ContainerTestBase {
 
     @Autowired
     private ExchangeService exchangeService;

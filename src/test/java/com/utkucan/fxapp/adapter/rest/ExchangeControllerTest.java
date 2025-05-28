@@ -1,5 +1,6 @@
 package com.utkucan.fxapp.adapter.rest;
 
+import com.utkucan.fxapp.common.ContainerTestBase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc
-class ExchangeControllerTest {
+class ExchangeControllerTest extends ContainerTestBase {
 
     @Autowired
     private MockMvc mockMvc;
@@ -62,7 +63,7 @@ class ExchangeControllerTest {
     void shouldFailWhenFromCurrencyIsMissing() throws Exception {
         String invalidRequest = """
         {
-          "to": "TRY",
+          "target": "TRY",
           "amount": 100
         }
     """;

@@ -3,6 +3,7 @@ package com.utkucan.fxapp.application.service;
 import com.utkucan.fxapp.application.dto.request.ExchangeHistoryFilter;
 import com.utkucan.fxapp.application.dto.request.ExchangeHistorySaveRequest;
 import com.utkucan.fxapp.application.dto.response.ExchangeHistoryDto;
+import com.utkucan.fxapp.common.ContainerTestBase;
 import com.utkucan.fxapp.common.TestExchangeHistoryFactory;
 import com.utkucan.fxapp.domain.enums.CurrencyCode;
 import com.utkucan.fxapp.domain.repository.ExchangeHistoryRepository;
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles("test")
-class ExchangeHistoryServiceTest {
+class ExchangeHistoryServiceTest extends ContainerTestBase {
 
     @Autowired
     private ExchangeHistoryService exchangeHistoryService;
