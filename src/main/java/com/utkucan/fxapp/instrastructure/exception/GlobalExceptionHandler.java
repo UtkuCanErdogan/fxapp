@@ -1,7 +1,6 @@
 package com.utkucan.fxapp.instrastructure.exception;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.utkucan.fxapp.adapter.response.ApiResponse;
+import com.utkucan.fxapp.adapter.response.RestResponse;
 import com.utkucan.fxapp.adapter.response.FieldValidationError;
 import com.utkucan.fxapp.common.exception.BaseException;
 import com.utkucan.fxapp.common.exception.ExceptionCode;
@@ -25,15 +24,15 @@ import java.util.UUID;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(BaseException.class)
-    public ResponseEntity<ApiResponse<Object>> handleBaseException(BaseException ex) {
+    public ResponseEntity<RestResponse<Object>> handleBaseException(BaseException ex) {
         ExceptionCode code = ex.getExceptionCode();
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(ApiResponse.error(code.code(), code.message(), null));
+                .body(RestResponse.error(code.code(), code.message(), null));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ApiResponse<Object>> handleValidation(MethodArgumentNotValidException ex) {
+    public ResponseEntity<RestResponse<Object>> handleValidation(MethodArgumentNotValidException ex) {
         ExceptionCode code = ExceptionCode.VALIDATION_EXCEPTION;
         List<FieldValidationError> errors = ex.getBindingResult()
                 .getFieldErrors()
@@ -47,11 +46,11 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .badRequest()
-                .body(ApiResponse.error(code.code(), code.message(), errors));
+                .body(RestResponse.error(code.code(), code.message(), errors));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<ApiResponse<Object>> handleConstraintViolation(ConstraintViolationException ex) {
+    public ResponseEntity<RestResponse<Object>> handleConstraintViolation(ConstraintViolationException ex) {
         ExceptionCode code = ExceptionCode.VALIDATION_EXCEPTION;
 
         List<FieldValidationError> errors = ex.getConstraintViolations()
@@ -67,7 +66,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .badRequest()
-                .body(ApiResponse.error(code.code(), code.message(), errors));
+                .body(RestResponse.error(code.code(), code.message(), errors));
     }
 
     @ExceptionHandler({
@@ -77,14 +76,14 @@ public class GlobalExceptionHandler {
             HttpMediaTypeNotAcceptableException.class,
             HttpMediaTypeNotSupportedException.class
     })
-    public ResponseEntity<ApiResponse<Void>> handleClientErrors(Exception ex) {
+    public ResponseEntity<RestResponse<Void>> handleClientErrors(Exception ex) {
         return ResponseEntity
                 .badRequest()
-                .body(ApiResponse.error("Invalid request payload", ex.getMessage(), null));
+                .body(RestResponse.error("Invalid request payload", ex.getMessage(), null));
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse<Object>> handleGeneric(Exception ex) {
+    public ResponseEntity<RestResponse<Object>> handleGeneric(Exception ex) {
         ExceptionCode code = ExceptionCode.UNKNOWN_EXCEPTION;
 
         String traceId = UUID.randomUUID().toString().substring(0, 8);
@@ -92,6 +91,6 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.error(code.code(), code.message(), null));
+                .body(RestResponse.error(code.code(), code.message(), null));
     }
 }
