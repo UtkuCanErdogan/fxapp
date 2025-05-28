@@ -7,6 +7,7 @@ import com.utkucan.fxapp.application.dto.response.ExchangeCsvResponse;
 import com.utkucan.fxapp.application.dto.response.ExchangeResponse;
 import com.utkucan.fxapp.common.exception.ExceptionCode;
 import com.utkucan.fxapp.common.exception.FileReadException;
+import com.utkucan.fxapp.common.exception.InvalidCurrencyException;
 import com.utkucan.fxapp.domain.entity.Currency;
 import com.utkucan.fxapp.domain.enums.CurrencyCode;
 import com.utkucan.fxapp.domain.repository.CurrencyRepository;
@@ -220,5 +221,25 @@ class ExchangeServiceTest {
         assertThat(ex)
                 .isInstanceOf(FileReadException.class)
                 .hasMessageContaining(ExceptionCode.FILE_READ_EXCEPTION.message());
+    }
+
+    @Test
+    void shouldThrowException_WhenUnSupportedCurrencyGiven() throws Exception {
+        ClassPathResource invalidTxt = new ClassPathResource("test-files/invalid_currency.csv");
+        MockMultipartFile file = new MockMultipartFile(
+                "files",
+                "invalid_currency.csv",
+                "text/csv",
+                invalidTxt.getInputStream()
+        );
+
+        InvalidCurrencyException ex = catchThrowableOfType(() ->
+                        exchangeService.processBulkCsv(new CsvUploadRequest(new MultipartFile[]{file})),
+                InvalidCurrencyException.class
+        );
+
+        assertThat(ex)
+                .isInstanceOf(InvalidCurrencyException.class)
+                .hasMessageContaining(ExceptionCode.INVALID_CURRENCY_EXCEPTION.message());
     }
 }

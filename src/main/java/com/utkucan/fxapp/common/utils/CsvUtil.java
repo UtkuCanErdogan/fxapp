@@ -3,13 +3,12 @@ package com.utkucan.fxapp.common.utils;
 import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.common.exception.ExceptionCode;
 import com.utkucan.fxapp.common.exception.FileReadException;
+import com.utkucan.fxapp.common.exception.InvalidCurrencyException;
 import com.utkucan.fxapp.domain.enums.CurrencyCode;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +29,18 @@ public class CsvUtil {
                String to = parts[1].trim();
                long amount = Long.parseLong(parts[2].trim());
 
-               CurrencyCode fromCurrency = CurrencyCode.valueOf(from);
-               CurrencyCode toCurrency = CurrencyCode.valueOf(to);
+               CurrencyCode fromCurrency = CurrencyCode.fromCode(from).orElseThrow(() -> new InvalidCurrencyException(
+                       ExceptionCode.INVALID_CURRENCY_EXCEPTION));
+
+               CurrencyCode toCurrency = CurrencyCode.fromCode(to).orElseThrow(() -> new InvalidCurrencyException(
+                       ExceptionCode.INVALID_CURRENCY_EXCEPTION));;
                requests.add(new ExchangeRequest(fromCurrency, toCurrency, amount));
            }
-       } catch (Exception e) {
+       } catch (InvalidCurrencyException e) {
+           throw e;
+       }
+
+       catch (Exception e) {
            throw new FileReadException(ExceptionCode.FILE_READ_EXCEPTION);
        }
 
