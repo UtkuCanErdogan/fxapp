@@ -6,13 +6,8 @@ import com.utkucan.fxapp.application.dto.request.ExchangeRequest;
 import com.utkucan.fxapp.application.dto.response.BulkCsvResponse;
 import com.utkucan.fxapp.application.dto.response.ExchangeHistoryDto;
 import com.utkucan.fxapp.application.dto.response.ExchangeResponse;
+import com.utkucan.fxapp.application.service.ExchangeHistoryService;
 import com.utkucan.fxapp.application.service.ExchangeService;
-import com.utkucan.fxapp.domain.entity.ExchangeHistory;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
-import io.swagger.v3.oas.annotations.media.Content;
-import jakarta.validation.Valid;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
@@ -28,14 +23,16 @@ import java.util.List;
 public class ExchangeController {
 
     private final ExchangeService exchangeService;
+    private final ExchangeHistoryService exchangeHistoryService;
 
-    public ExchangeController(ExchangeService exchangeService) {
+    public ExchangeController(ExchangeService exchangeService, ExchangeHistoryService exchangeHistoryService) {
         this.exchangeService = exchangeService;
+        this.exchangeHistoryService = exchangeHistoryService;
     }
 
-    @GetMapping()
+    @GetMapping("/history")
     public ResponseEntity<ApiResponse<Page<ExchangeHistoryDto>>> findAll(@ParameterObject ExchangeHistoryFilter filter) {
-        Page<ExchangeHistoryDto> exchangeResponses = exchangeService.findAll(filter);
+        Page<ExchangeHistoryDto> exchangeResponses = exchangeHistoryService.findAll(filter);
         return ResponseEntity.ok(ApiResponse.success(exchangeResponses));
     }
 
